@@ -75,7 +75,12 @@ const App = () => {
         myStorage.getPeerConnection.ondatachannel = (event) => {
             const dataChannel = event.channel;
  
+            dataChannel.onopen = () => {
+                console.log('peer connection is ready to receive data channel message')
+            };
+ 
             dataChannel.onmessage = (event) => {
+                 console.log("message came from  data channel");
                  const message = JSON.parse(event.data);
                  message.check = "reciver"
                  dispatch({
@@ -86,29 +91,30 @@ const App = () => {
         }
  
         myStorage.getPeerConnection.onicecandidate = (event) => {
-            if(event.candidate){
-                socket.emit("webRTC-signaling",{
-                    connectedUserSocketId: data.callerSocketId,
-                    type: "ICE_CANDIDATE",
-                    candidate: event.candidate
-                })
-            }
-        }
+             console.log("getting ice candidates from  stun server");
+             if(event.candidate){
+                 socket.emit("webRTC-signaling",{
+                     connectedUserSocketId: data.callerSocketId,
+                     type: "ICE_CANDIDATE",
+                     candidate: event.candidate
+                 })
+             }
+         }
          
-        const remoteStream = new MediaStream();
-        
-        const video = document.getElementById("remoteVideo");
-        video.srcObject = remoteStream;
-
-        myStorage.getPeerConnection.ontrack = (event) => {
-            remoteStream.addTrack(event.track);
-        }
-
-        if(data.callType === "Video"){
-            for (const track of myStorage.getMediaInfo.getTracks()) {
-                myStorage.getPeerConnection.addTrack(track, myStorage.getMediaInfo);
-            }
-        }
+         const remoteStream = new MediaStream();
+         
+         const video = document.getElementById("remoteVideo");
+         video.srcObject = remoteStream;
+ 
+         myStorage.getPeerConnection.ontrack = (event) => {
+             remoteStream.addTrack(event.track);
+         }
+ 
+         if(data.callType === "Video"){
+             for (const track of myStorage.getMediaInfo.getTracks()) {
+                 myStorage.getPeerConnection.addTrack(track, myStorage.getMediaInfo);
+             }
+         }
  
      }
 
