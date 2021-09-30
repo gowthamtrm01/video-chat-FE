@@ -51,7 +51,7 @@ export {messageContext};
 
 const App = () => {
 
-    const [socket, setSocket] = useState(io('http://localhost:5000'));
+    const [socket, setSocket] = useState(io('https://video-chat-pesonalcode.herokuapp.com'));
     const [chatContainer, setChatContainer] = useState(false);
     const myStorage = storage;
     const message = [];
