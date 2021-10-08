@@ -51,7 +51,6 @@ const Dashboard = ({socket}) => {
         socket.on("pre-offer-answer", (data) => {
             if(data.preOfferAnswer === "CALL_ACCEPTED"){
 
-
                 setPopupCallFrom(false);
             }else if(data.preOfferAnswer === "CALL_REJECTED"){
                 setPopupCallFrom(false);

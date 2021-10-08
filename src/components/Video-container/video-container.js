@@ -206,7 +206,7 @@ const VideoContainer = ({socket, storage, createPeerConnection, setChatContainer
                         </div>
                     )}
                     <div className={classes.localVideoContainer}>
-                        <video autoPlay id="localVideo"   className={classes.localVideo}/>
+                        <video autoPlay id="localVideo" muted   className={classes.localVideo}/>
                     </div>
                     {videoCall && (
                         <div className={classes.buttonCenter}>
